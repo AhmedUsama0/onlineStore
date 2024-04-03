@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --main-color: #3f3b3a;
+  --main-background-color: #f6f7f8;
+  --green-color: #003d29;
+  --light-green-color: #03a803;
+  --orange-color: #ff7114;
+}
+.fa-solid.fa-star {
+  color: var(--light-green-color) !important;
+}

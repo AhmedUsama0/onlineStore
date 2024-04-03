@@ -1,0 +1,19 @@
+.page-link.active:hover,
+.page-link.active:focus,
+.page-line.active:active,
+.page-link.active {
+    background-color: var(--green-color) !important;
+    border-color: unset !important;
+    box-shadow: unset !important;
+    color: #fff !important;
+}
+
+.visible-pages {
+    width: 100px;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+}
+
+.scroll-item {
+    scroll-snap-align: start;
+}

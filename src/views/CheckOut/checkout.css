@@ -1,0 +1,8 @@
+.checkout {
+  margin-top: calc((100vh - 74px) / 8) !important;
+}
+.product-item:hover {
+  background-color: var(--bs-tertiary-bg);
+  cursor: pointer;
+}
+

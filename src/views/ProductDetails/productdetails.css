@@ -1,0 +1,8 @@
+.quantity-wrapper {
+    max-width: 150px;
+    background-color: var(--main-background-color);
+}
+
+.quantity-wrapper > * {
+    color: var(--green-color) !important;
+}
