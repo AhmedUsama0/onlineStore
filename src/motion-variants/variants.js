@@ -17,7 +17,8 @@ export const productVariants = {
         transition: { duration: 2 },
     },
     inHover: {
-        scale: 1.1
+        scale: 1.1,
+        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" 
     }
 };
 

@@ -11,17 +11,16 @@ const Product = ({ product }) => {
   const handleCartItem = useCartItem();
 
   return (
-    <motion.div
-      variants={productVariants}
-      initial="hidden"
-      whileInView="inView"
-      whileHover="inHover"
+    <div
       className="product col-12 col-sm col-lg-3"
       role="button"
       onClick={() => navigate(`/product/${id}`)}
     >
       <motion.div
-        whileHover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}
+        variants={productVariants}
+        initial="hidden"
+        whileInView="inView"
+        whileHover="inHover"
         className="card position-relative h-100"
       >
         <i
@@ -69,7 +68,7 @@ const Product = ({ product }) => {
           </motion.button>
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
