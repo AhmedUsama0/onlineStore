@@ -38,7 +38,6 @@ export const landingImageVariants = {
         transition: {
             duration: 0.5,
             when: "beforeChildren",
-            staggerChildren: 2
         }
     }
 };
