@@ -1,3 +1,16 @@
+.main__header {
+  top: 10px !important;
+}
+.header-scroll {
+  box-shadow: var(--main-box-shadow);
+  background-color: #fff;
+}
+.cart ~ .dropdown-menu {
+  min-width: 20vw;
+  height: 300px;
+  box-shadow: var(--main-box-shadow);
+}
+
 .dropitem:last-child {
   border: 0 !important;
 }

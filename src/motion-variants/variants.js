@@ -18,6 +18,7 @@ export const productVariants = {
     },
     inHover: {
         scale: 1.1,
+        zIndex: 200,
         boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" 
     }
 };
@@ -42,7 +43,7 @@ export const landingImageVariants = {
     }
 };
 
-export const mianTitleVariants = {
+export const mainTitleVariants = {
     hidden: {
         y: -500
     },

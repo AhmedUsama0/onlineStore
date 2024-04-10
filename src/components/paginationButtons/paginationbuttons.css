@@ -9,7 +9,7 @@
 }
 
 .visible-pages {
-    width: 100px;
+    max-width: 100px;
     overflow-x: hidden;
     scroll-snap-type: x mandatory;
 }

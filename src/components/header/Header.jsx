@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useCart, useSearchQuery } from "../../hooks";
 import { motion } from "framer-motion";
 import { headerVariants } from "../../motion-variants/variants";
+import { useEffect, useState } from "react";
 import shopcart from "../../assets/shopcart.jpg";
 import "./header.css";
 
@@ -10,7 +11,7 @@ const NavBar = () => {
     <nav className="col-5  d-flex justify-content-center">
       <ul className="nav column-gap-5" style={{ color: "var(--main-color)" }}>
         <NavLink
-          to="/1"
+          to="/page/1"
           className="text-capitalize text-decoration-none position-relative pb-1"
           style={{ color: "var(--main-color)" }}
         >
@@ -46,7 +47,7 @@ const SearchBar = () => {
     </div>
   );
 };
-const DropdownItem = ({ item }) => {
+const CartItem = ({ item }) => {
   const { title, price, image, quantity, id } = item;
   const navigate = useNavigate();
   return (
@@ -80,18 +81,31 @@ const DropdownItem = ({ item }) => {
 };
 const Header = () => {
   const { cart } = useCart();
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    setIsScrolled(scrollY >= 50 ? true : false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <motion.header
       variants={headerVariants}
       initial="hidden"
       animate="visible"
-      className="main__header mt-4 sticky-top"
-      style={{ top: "10px" }}
+      className={`main__header sticky-top mt-4 rounded-5 px-2 ${
+        isScrolled ? "header-scroll" : ""
+      }`}
     >
-      <div className="d-flex align-items-center flex-wrap bg-light rounded-5 ps-2 px-2">
+      <div className="d-flex align-items-center flex-wrap">
         <div className="logo col d-flex align-items-center gap-2">
-          <Link to="/1">
+          <Link to="/page/1">
             <img
               className="rounded-circle"
               src={shopcart}
@@ -125,7 +139,7 @@ const Header = () => {
               </Link>
             </ul>
           </div>
-          <div className="dropdown border border-primary">
+          <div className="dropdown">
             <div
               className="cart d-flex align-items-center gap-2 position-relative dropdown-toggle"
               data-bs-toggle="dropdown"
@@ -139,15 +153,9 @@ const Header = () => {
               <i className="fa fa-cart-shopping"></i>
               <span className="text-capitalize">cart</span>
             </div>
-            <motion.ul
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 25 }}
-              transition={{ duration: 0.5 }}
-              className="dropdown-menu dropdown-menu-end overflow-auto"
-              style={{ minWidth: "20vw", height: "300px" }}
-            >
+            <motion.ul className="dropdown-menu dropdown-menu-end overflow-auto">
               {cart.map((item, index) => (
-                <DropdownItem item={item} key={item.id} />
+                <CartItem item={item} key={item.id} />
               ))}
             </motion.ul>
           </div>

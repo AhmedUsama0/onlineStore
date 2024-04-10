@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import "./paginationbuttons.css";
 import { useEffect, useRef } from "react";
+import "./paginationbuttons.css";
 const PaginationButtons = ({ numberOfPages, currentPage }) => {
   const navigate = useNavigate();
   const scrollablePagination = useRef(null);
   const pages = useRef([]);
 
   const scrollPagination = (direction) => {
-    const scroll_item = pages.current[0].parentElement;
-    const scrollAmount = scroll_item.clientWidth;
+    const page = pages.current[0]?.parentElement;
+    const scrollAmount = page?.clientWidth;
     switch (direction) {
       case "forward":
         scrollablePagination.current.scrollLeft += scrollAmount;
@@ -27,7 +27,7 @@ const PaginationButtons = ({ numberOfPages, currentPage }) => {
     if (parseInt(currentPage) === 1 && direction === "backward") return;
     const nextPage = getNextPage(direction);
     scrollPagination(direction);
-    navigate(`/${nextPage}`);
+    navigate(`/page/${nextPage}`);
   };
   const getNextPage = (direction) => {
     let page;
@@ -52,7 +52,7 @@ const PaginationButtons = ({ numberOfPages, currentPage }) => {
 
   useEffect(() => {
     const activePage = pages.current.find((page) => page.id === currentPage);
-    activePage.click();
+    activePage?.click();
   }, [currentPage]);
   return (
     <nav aria-label="Page navigation example">
@@ -81,7 +81,7 @@ const PaginationButtons = ({ numberOfPages, currentPage }) => {
                     ref={(page) => (pages.current[index] = page)}
                     id={index + 1}
                     className="page-link page border border-success-subtle"
-                    to={`/${index + 1}`}
+                    to={`/page/${index + 1}`}
                   >
                     {index + 1}
                   </Link>

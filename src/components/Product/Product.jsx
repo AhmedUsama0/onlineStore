@@ -21,6 +21,7 @@ const Product = ({ product }) => {
         initial="hidden"
         whileInView="inView"
         whileHover="inHover"
+        viewport={{ once: true }}
         className="card position-relative h-100"
       >
         <i

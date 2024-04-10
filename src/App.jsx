@@ -8,7 +8,7 @@ const App = () => {
       options={{ clientId: paypalClientId, currency: "USD" }}
     >
       <div className="container">
-        <RouterProvider router={router} />
+        <RouterProvider router={router}  fallbackElement={<h1>loading...</h1>}/>
       </div>
     </PayPalScriptProvider>
   );
