@@ -33,16 +33,18 @@ const ProductItemReview = ({ product }) => {
       className="product-item list-group-item border-0 border-bottom border border-light-subtle"
     >
       <div className="row">
-        <div className="col-10 d-flex align-items-center column-gap-2">
+        <div className="col-9 d-flex align-items-center column-gap-2">
           <img src={image} alt="product" width="50" height="50" />
           <h5 className="text-capitalize fw-bold h6">{title}</h5>
         </div>
-        <div className="col">
-          <h4 className="fw-bold fs-5 mb-3">${(price * quantity).toFixed(2)}</h4>
+        <div className="col d-flex flex-column align-items-end">
+          <h4 className="fw-bold fs-5 mb-3">
+            ${(price * quantity).toFixed(2)}
+          </h4>
           <div className="d-flex align-items-center column-gap-2">
             <button
               type="button"
-              className="quantity-btn w-50 border rounded-2 fs-5 fw-semibold"
+              className="quantity-btn border rounded-2 fs-5 fw-semibold"
               onClick={decreaseQuantity}
             >
               -
@@ -50,7 +52,7 @@ const ProductItemReview = ({ product }) => {
             <span>{quantity}</span>
             <button
               type="button"
-              className="quantity-btn border w-50 rounded-2 fs-5 fw-semibold"
+              className="quantity-btn border rounded-2 fs-5 fw-semibold"
               onClick={increaseQuantity}
             >
               +

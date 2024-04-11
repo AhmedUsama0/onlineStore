@@ -1,4 +1,5 @@
 .quantity-btn {
     background-color: var(--main-background-color) !important;
     color: var(--green-color) !important;
+    width: 30px;
 }
