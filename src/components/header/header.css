@@ -5,14 +5,18 @@
   box-shadow: var(--main-box-shadow);
   background-color: #fff;
 }
-.cart ~ .dropdown-menu {
+.menu {
   min-width: 20vw;
   height: 300px;
   box-shadow: var(--main-box-shadow);
+  overflow-y: scroll;
 }
 
 .dropitem:last-child {
   border: 0 !important;
+}
+.dropitem:hover {
+  background-color: #d1d2d3 !important;
 }
 
 .active {

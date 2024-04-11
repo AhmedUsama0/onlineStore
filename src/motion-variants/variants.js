@@ -8,6 +8,19 @@ export const headerVariants = {
     },
 };
 
+export const cartMenuVariants = {
+    hidden: {
+        opacity: 0,
+        y: "100px",
+        transition: { type: "tween" }
+    },
+    visible: {
+        opacity: 1,
+        y: "10px",
+        transition: { type: "tween" }
+    },
+}
+
 export const productVariants = {
     hidden: {
         x: 100,
@@ -19,7 +32,7 @@ export const productVariants = {
     inHover: {
         scale: 1.1,
         zIndex: 200,
-        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" 
+        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
     }
 };
 

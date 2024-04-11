@@ -1,7 +1,10 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useCart, useSearchQuery } from "../../hooks";
-import { motion } from "framer-motion";
-import { headerVariants } from "../../motion-variants/variants";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  cartMenuVariants,
+  headerVariants,
+} from "../../motion-variants/variants";
 import { useEffect, useState } from "react";
 import shopcart from "../../assets/shopcart.jpg";
 import "./header.css";
@@ -82,7 +85,11 @@ const CartItem = ({ item }) => {
 const Header = () => {
   const { cart } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
+  const ToggleMenu = () => {
+    setShowMenu((sh) => !sh);
+  };
   const handleScroll = () => {
     const scrollY = window.scrollY;
     setIsScrolled(scrollY >= 50 ? true : false);
@@ -109,7 +116,8 @@ const Header = () => {
             <img
               className="rounded-circle"
               src={shopcart}
-              style={{ width: "50px", height: "50px" }}
+              width="50px"
+              height="50px"
               alt="logo"
             />
           </Link>
@@ -139,13 +147,11 @@ const Header = () => {
               </Link>
             </ul>
           </div>
-          <div className="dropdown">
+          <div className="position-relative">
             <div
-              className="cart d-flex align-items-center gap-2 position-relative dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="inside"
               role="button"
+              className="position-relative"
+              onClick={ToggleMenu}
             >
               <span className="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
                 {cart.length}
@@ -153,11 +159,21 @@ const Header = () => {
               <i className="fa fa-cart-shopping"></i>
               <span className="text-capitalize">cart</span>
             </div>
-            <motion.ul className="dropdown-menu dropdown-menu-end overflow-auto">
-              {cart.map((item, index) => (
-                <CartItem item={item} key={item.id} />
-              ))}
-            </motion.ul>
+            <AnimatePresence>
+              {showMenu && (
+                <motion.ul
+                  variants={cartMenuVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="menu position-absolute border end-0 bg-light p-0"
+                  exit="hidden"
+                >
+                  {cart.map((item, index) => {
+                    return <CartItem item={item} key={index} />;
+                  })}
+                </motion.ul>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         {/* end account-cart */}
