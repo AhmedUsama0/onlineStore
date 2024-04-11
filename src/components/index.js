@@ -4,3 +4,4 @@ export {default as PaginationButtons} from "./paginationButtons/PaginationButton
 export {default as ProductItemReview} from "./ProductItemReview/ProductItemReview";
 export {default as ProductsList} from "./ProductsList/ProductsList";
 export {default as ProductsSkeleton} from "./ProductsSkeleton/ProductsSkeleton";
+export{default as LoadingIndicator} from "./LoadingIndicator/LoadingIndicator";
