@@ -16,7 +16,7 @@
   border: 0 !important;
 }
 .dropitem:hover {
-  background-color: #d1d2d3 !important;
+  background-color: rgba(209, 210, 211, 0.3) !important;
 }
 
 .active {
