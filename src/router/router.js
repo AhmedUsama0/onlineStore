@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route,Navigate } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, Navigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import { CheckOut, LandingPage, ProductDetails } from "../views";
 import ProductsLoader from "./loaders/ProductsLoader";
