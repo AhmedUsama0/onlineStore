@@ -128,7 +128,7 @@ const Header = () => {
         <NavBar />
         <SearchBar />
         {/* start account-cart */}
-        <div className="account-cart col d-flex align-items-center justify-content-around">
+        <div className="account-cart col d-flex align-items-center justify-content-around" style={{userSelect: "none"}}>
           <div className="dropdown dropdown-center">
             <div
               className="account d-flex align-items-center gap-2"
@@ -147,7 +147,7 @@ const Header = () => {
               </Link>
             </ul>
           </div>
-          <div className="position-relative">
+          <div className="position-relative" style={{ userSelect: "none" }}>
             <div
               role="button"
               className="position-relative"
