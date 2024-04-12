@@ -24,7 +24,6 @@ const CheckOut = () => {
       </div>
     );
   };
-
   return (
     <section className="checkout">
       <PurchaseMessage
@@ -60,7 +59,6 @@ const CheckOut = () => {
           <button
             style={{ backgroundColor: "var(--green-color)" }}
             className="btn text-white text-capitalize w-100"
-            onClick={() => setShowPurchaseMessage(true)}
           >
             place order
           </button>
@@ -73,19 +71,21 @@ const CheckOut = () => {
                   {
                     amount: {
                       value: totalCost,
+                      breakdown: {
+                        item_total: { value: subTotal, currency_code: "USD" },
+                        shipping: { value: shippingFee, currency_code: "USD" },
+                        tax_total: { value: tax, currency_code: "USD" },
+                      },
                     },
                   },
                 ],
               });
             }}
-            onApprove={(data, actions) => {
-              return actions.order.capture().then(function (details) {
-                setShowPurchaseMessage(true);
-                setPurchaseMessage("purchase completed successfully");
-                // alert("Transaction completed by " + details.payer.name.given_name);
-                console.log(details);
-                // Call your server to save the transaction
-              });
+            onApprove={async (data, actions) => {
+              const order = await actions.order.capture();
+              setShowPurchaseMessage(true);
+              setPurchaseMessage("purchase completed successfully");
+              console.log(order);
             }}
             onError={(err) => {
               setShowPurchaseMessage(true);
