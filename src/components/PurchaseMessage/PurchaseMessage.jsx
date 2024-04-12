@@ -1,7 +1,46 @@
 import { motion, useAnimate } from "framer-motion";
 import { purchaseMessageVariants } from "../../motion-variants/variants";
 
-const PurchaseMessage = ({ showPurchaseMessage, setShowPurchaseMessage }) => {
+const PurchaseMessageSVG = ({ purchaseMessage }) => {
+  return (
+    <>
+      {purchaseMessage === "purchase completed successfully" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          height="100"
+          width="100"
+          className="w-100 mt-3 mb-3"
+        >
+          <path
+            fill="#198754"
+            d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
+          />
+        </svg>
+      )}
+      {purchaseMessage === "purchase not completed" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          height="100"
+          width="100"
+          className="w-100 mt-3 mb-3"
+        >
+          <path
+            fill="#DC3545"
+            d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
+          />
+        </svg>
+      )}
+    </>
+  );
+};
+
+const PurchaseMessage = ({
+  showPurchaseMessage,
+  setShowPurchaseMessage,
+  purchaseMessage,
+}) => {
   const [scope, animate] = useAnimate();
 
   const hideMessage = async () => {
@@ -20,13 +59,26 @@ const PurchaseMessage = ({ showPurchaseMessage, setShowPurchaseMessage }) => {
             variants={purchaseMessageVariants}
             initial="hidden"
             animate="visible"
-            className="message-container row-gap-3 rounded-3 d-flex flex-column align-items-center justify-content-around bg-light pt-3 pb-3 w-25"
-            style={{ height: "150px" }}
+            className="message-container rounded-3 bg-light pt-3 pb-3 col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3"
+            style={{ minHeight: "150px" }}
           >
-            <h5 className="text-capitalize">purchase successfully</h5>
+            <h5
+              className={`text-capitalize text-center ${
+                purchaseMessage === "purchase completed successfully"
+                  ? "text-success"
+                  : "text-danger"
+              }`}
+            >
+              {purchaseMessage}
+            </h5>
+            <PurchaseMessageSVG purchaseMessage={purchaseMessage} />
             <button
               type="button"
-              className="btn btn-success text-capitalize w-25"
+              className={`btn text-capitalize d-block m-auto w-25 ${
+                purchaseMessage === "purchase completed successfully"
+                  ? "btn-success"
+                  : "btn-danger"
+              }`}
               onClick={hideMessage}
             >
               ok

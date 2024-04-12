@@ -14,6 +14,7 @@ const CheckOut = () => {
   const totalCost = (subTotal + shippingFee + tax).toFixed(2);
 
   const [showPurchaseMessage, setShowPurchaseMessage] = useState(false);
+  const [purchaseMessage, setPurchaseMessage] = useState("");
 
   const PriceSection = ({ price, priceTitle }) => {
     return (
@@ -29,13 +30,14 @@ const CheckOut = () => {
       <PurchaseMessage
         showPurchaseMessage={showPurchaseMessage}
         setShowPurchaseMessage={setShowPurchaseMessage}
+        purchaseMessage={purchaseMessage}
       />
       <h2 className="text-capitalize fs-5 fw-bold">
         review items and shipping
       </h2>
       <div className="row m-0">
         <div
-          className="col-12 col-sm-7 border rounded-2 p-0"
+          className="col-12 col-sm-7 border rounded-2 p-0 text-danger"
           style={{ height: "fit-content" }}
         >
           <ul className="list-group">
@@ -63,6 +65,7 @@ const CheckOut = () => {
             place order
           </button>
           <PayPalButtons
+            key={totalCost}
             style={{ color: "blue", label: "checkout" }}
             createOrder={(data, actions) => {
               return actions.order.create({
@@ -78,10 +81,15 @@ const CheckOut = () => {
             onApprove={(data, actions) => {
               return actions.order.capture().then(function (details) {
                 setShowPurchaseMessage(true);
+                setPurchaseMessage("purchase completed successfully");
                 // alert("Transaction completed by " + details.payer.name.given_name);
                 console.log(details);
                 // Call your server to save the transaction
               });
+            }}
+            onError={(err) => {
+              setShowPurchaseMessage(true);
+              setPurchaseMessage("purchase not completed");
             }}
           />
         </div>
