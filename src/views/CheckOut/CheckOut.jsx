@@ -1,6 +1,7 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useCart } from "../../hooks";
-import { ProductItemReview } from "../../components";
+import { ProductItemReview, PurchaseMessage } from "../../components";
+import { useState } from "react";
 import "./checkout.css";
 const CheckOut = () => {
   const { cart } = useCart();
@@ -11,6 +12,9 @@ const CheckOut = () => {
   const shippingFee = subTotal / 100;
   const tax = (subTotal * 15) / 100;
   const totalCost = (subTotal + shippingFee + tax).toFixed(2);
+
+  const [showPurchaseMessage, setShowPurchaseMessage] = useState(false);
+  
   const PriceSection = ({ price, priceTitle }) => {
     return (
       <div className="d-flex align-items-center justify-content-between">
@@ -19,8 +23,13 @@ const CheckOut = () => {
       </div>
     );
   };
+
   return (
     <section className="checkout">
+      <PurchaseMessage
+        showPurchaseMessage={showPurchaseMessage}
+        setShowPurchaseMessage={setShowPurchaseMessage}
+      />
       <h2 className="text-capitalize fs-5 fw-bold">
         review items and shipping
       </h2>
@@ -49,6 +58,7 @@ const CheckOut = () => {
           <button
             style={{ backgroundColor: "var(--green-color)" }}
             className="btn text-white text-capitalize w-100"
+            onClick={() => setShowPurchaseMessage(true)}
           >
             place order
           </button>

@@ -6,7 +6,10 @@ const App = () => {
   const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
   return (
     <PayPalScriptProvider
-      options={{ clientId: paypalClientId, currency: "USD" }}
+      options={{
+        clientId: paypalClientId,
+        currency: "USD",
+      }}
     >
       <div className="container">
         <RouterProvider

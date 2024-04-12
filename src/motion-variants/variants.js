@@ -65,3 +65,13 @@ export const mainTitleVariants = {
         transition: { type: "spring", stiffness: 100, mass: 0.5, damping: 10 }
     }
 };
+
+export const purchaseMessageVariants = {
+    hidden: {
+        scale: 0,
+    },
+    visible: {
+        scale: 1,
+        transition: { type: "tween" },
+    },
+};
