@@ -14,7 +14,7 @@ const CheckOut = () => {
   const totalCost = (subTotal + shippingFee + tax).toFixed(2);
 
   const [showPurchaseMessage, setShowPurchaseMessage] = useState(false);
-  
+
   const PriceSection = ({ price, priceTitle }) => {
     return (
       <div className="d-flex align-items-center justify-content-between">
@@ -77,6 +77,7 @@ const CheckOut = () => {
             }}
             onApprove={(data, actions) => {
               return actions.order.capture().then(function (details) {
+                setShowPurchaseMessage(true);
                 // alert("Transaction completed by " + details.payer.name.given_name);
                 console.log(details);
                 // Call your server to save the transaction
