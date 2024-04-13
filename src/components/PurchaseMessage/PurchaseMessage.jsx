@@ -1,5 +1,5 @@
 import { motion, useAnimate } from "framer-motion";
-import { purchaseMessageVariants } from "../../motion-variants/variants";
+import { modalVariants } from "../../motion-variants/variants";
 
 const PurchaseMessageSVG = ({ purchaseMessage }) => {
   return (
@@ -36,10 +36,7 @@ const PurchaseMessageSVG = ({ purchaseMessage }) => {
   );
 };
 
-const PurchaseMessage = ({
-  setPurchaseMessage,
-  purchaseMessage,
-}) => {
+const PurchaseMessage = ({ setPurchaseMessage, purchaseMessage }) => {
   const [scope, animate] = useAnimate();
 
   const hideMessage = async () => {
@@ -53,7 +50,7 @@ const PurchaseMessage = ({
     >
       <motion.div
         ref={scope}
-        variants={purchaseMessageVariants}
+        variants={modalVariants}
         initial="hidden"
         animate="visible"
         className="message-container rounded-3 bg-light pt-3 pb-3 col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3"

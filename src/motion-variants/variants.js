@@ -66,7 +66,7 @@ export const mainTitleVariants = {
     }
 };
 
-export const purchaseMessageVariants = {
+export const modalVariants = {
     hidden: {
         scale: 0,
     },

@@ -1,5 +1,6 @@
 import { motion, useAnimate } from "framer-motion";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { modalVariants } from "../../motion-variants/variants";
 const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
   const [scope, animate] = useAnimate();
   const { subTotal, shippingFee, tax, totalCost } = details;
@@ -15,9 +16,9 @@ const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
       <div className="modal-container h-100 d-flex justify-content-center align-items-center">
         <motion.div
           ref={scope}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "tween" }}
+          variants={modalVariants}
+          initial="hidden"
+          animate="visible"
           className="p-3 col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 bg-light col-xxl-3 rounded-2 d-flex flex-column"
           style={{
             minHeight: "300px",
