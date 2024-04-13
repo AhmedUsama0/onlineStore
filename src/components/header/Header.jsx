@@ -165,7 +165,7 @@ const Header = () => {
                   variants={cartMenuVariants}
                   initial="hidden"
                   animate="visible"
-                  className="menu position-absolute border end-0 bg-light p-0"
+                  className="menu position-absolute border end-0 p-0 rounded-2 overflow-auto"
                   exit="hidden"
                 >
                   {cart.map((item, index) => {

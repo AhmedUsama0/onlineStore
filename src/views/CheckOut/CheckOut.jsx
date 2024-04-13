@@ -1,20 +1,22 @@
-import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useCart } from "../../hooks";
-import { ProductItemReview, PurchaseMessage } from "../../components";
+import {
+  ProductItemReview,
+  PurchaseMessage,
+  CheckoutModal,
+} from "../../components";
 import { useState } from "react";
 import "./checkout.css";
 const CheckOut = () => {
   const { cart } = useCart();
+  const [purchaseMessage, setPurchaseMessage] = useState("");
+  const [showCheckout, setShowCheckout] = useState(false);
+
   const subTotal = cart
     .map((item) => item.price * item.quantity)
     .reduce((total, price) => total + price);
-
   const shippingFee = subTotal / 100;
   const tax = (subTotal * 15) / 100;
   const totalCost = (subTotal + shippingFee + tax).toFixed(2);
-
-  const [showPurchaseMessage, setShowPurchaseMessage] = useState(false);
-  const [purchaseMessage, setPurchaseMessage] = useState("");
 
   const PriceSection = ({ price, priceTitle }) => {
     return (
@@ -26,11 +28,19 @@ const CheckOut = () => {
   };
   return (
     <section className="checkout">
-      <PurchaseMessage
-        showPurchaseMessage={showPurchaseMessage}
-        setShowPurchaseMessage={setShowPurchaseMessage}
-        purchaseMessage={purchaseMessage}
-      />
+      {showCheckout && (
+        <CheckoutModal
+          details={{ subTotal, shippingFee, tax, totalCost }}
+          setPurchaseMessage={setPurchaseMessage}
+          setShowCheckout={setShowCheckout}
+        />
+      )}
+      {purchaseMessage.trim() !== "" && (
+        <PurchaseMessage
+          setPurchaseMessage={setPurchaseMessage}
+          purchaseMessage={purchaseMessage}
+        />
+      )}
       <h2 className="text-capitalize fs-5 fw-bold">
         review items and shipping
       </h2>
@@ -58,40 +68,11 @@ const CheckOut = () => {
           </div>
           <button
             style={{ backgroundColor: "var(--green-color)" }}
-            className="btn text-white text-capitalize w-100"
+            className="btn text-white text-capitalize w-100 mt-4"
+            onClick={() => setShowCheckout(true)}
           >
             place order
           </button>
-          <PayPalButtons
-            key={totalCost}
-            style={{ color: "blue", label: "checkout" }}
-            createOrder={(data, actions) => {
-              return actions.order.create({
-                purchase_units: [
-                  {
-                    amount: {
-                      value: totalCost,
-                      breakdown: {
-                        item_total: { value: subTotal, currency_code: "USD" },
-                        shipping: { value: shippingFee, currency_code: "USD" },
-                        tax_total: { value: tax, currency_code: "USD" },
-                      },
-                    },
-                  },
-                ],
-              });
-            }}
-            onApprove={async (data, actions) => {
-              const order = await actions.order.capture();
-              setShowPurchaseMessage(true);
-              setPurchaseMessage("purchase completed successfully");
-              console.log(order);
-            }}
-            onError={(err) => {
-              setShowPurchaseMessage(true);
-              setPurchaseMessage("purchase not completed");
-            }}
-          />
         </div>
       </div>
     </section>

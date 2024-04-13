@@ -37,56 +37,51 @@ const PurchaseMessageSVG = ({ purchaseMessage }) => {
 };
 
 const PurchaseMessage = ({
-  showPurchaseMessage,
-  setShowPurchaseMessage,
+  setPurchaseMessage,
   purchaseMessage,
 }) => {
   const [scope, animate] = useAnimate();
 
   const hideMessage = async () => {
     await animate(scope.current, { scale: 0 });
-    setShowPurchaseMessage(false);
+    setPurchaseMessage("");
   };
   return (
-    <>
-      {showPurchaseMessage && (
-        <div
-          className="d-flex justify-content-center align-items-center top-0 start-0 position-fixed w-100 h-100"
-          style={{ zIndex: 2000, backgroundColor: "rgba(0,0,0,0.5)" }}
+    <div
+      className="d-flex justify-content-center align-items-center top-0 start-0 position-fixed w-100 h-100"
+      style={{ zIndex: 3000, backgroundColor: "rgba(0,0,0,0.5)" }}
+    >
+      <motion.div
+        ref={scope}
+        variants={purchaseMessageVariants}
+        initial="hidden"
+        animate="visible"
+        className="message-container rounded-3 bg-light pt-3 pb-3 col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3"
+        style={{ minHeight: "150px" }}
+      >
+        <h5
+          className={`text-capitalize text-center ${
+            purchaseMessage === "purchase completed successfully"
+              ? "text-success"
+              : "text-danger"
+          }`}
         >
-          <motion.div
-            ref={scope}
-            variants={purchaseMessageVariants}
-            initial="hidden"
-            animate="visible"
-            className="message-container rounded-3 bg-light pt-3 pb-3 col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3"
-            style={{ minHeight: "150px" }}
-          >
-            <h5
-              className={`text-capitalize text-center ${
-                purchaseMessage === "purchase completed successfully"
-                  ? "text-success"
-                  : "text-danger"
-              }`}
-            >
-              {purchaseMessage}
-            </h5>
-            <PurchaseMessageSVG purchaseMessage={purchaseMessage} />
-            <button
-              type="button"
-              className={`btn text-capitalize d-block m-auto w-25 ${
-                purchaseMessage === "purchase completed successfully"
-                  ? "btn-success"
-                  : "btn-danger"
-              }`}
-              onClick={hideMessage}
-            >
-              ok
-            </button>
-          </motion.div>
-        </div>
-      )}
-    </>
+          {purchaseMessage}
+        </h5>
+        <PurchaseMessageSVG purchaseMessage={purchaseMessage} />
+        <button
+          type="button"
+          className={`btn text-capitalize d-block m-auto w-25 ${
+            purchaseMessage === "purchase completed successfully"
+              ? "btn-success"
+              : "btn-danger"
+          }`}
+          onClick={hideMessage}
+        >
+          ok
+        </button>
+      </motion.div>
+    </div>
   );
 };
 

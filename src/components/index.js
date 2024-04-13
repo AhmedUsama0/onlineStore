@@ -6,3 +6,4 @@ export { default as ProductsList } from "./ProductsList/ProductsList";
 export { default as ProductsSkeleton } from "./ProductsSkeleton/ProductsSkeleton";
 export { default as LoadingIndicator } from "./LoadingIndicator/LoadingIndicator";
 export { default as PurchaseMessage } from "./PurchaseMessage/PurchaseMessage";
+export { default as CheckoutModal } from "./CheckoutModal/CheckoutModal";
