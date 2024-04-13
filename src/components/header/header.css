@@ -8,8 +8,8 @@
 .menu {
   min-width: 20vw;
   height: 300px;
-  box-shadow: var(--main-box-shadow);
-  overflow-y: scroll;
+  box-shadow: var(--main-box-shadow) !important;
+  background-color: #fff;
 }
 
 .dropitem:last-child {
