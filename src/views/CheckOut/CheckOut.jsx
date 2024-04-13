@@ -1,10 +1,11 @@
 import { useCart } from "../../hooks";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   ProductItemReview,
   PurchaseMessage,
   CheckoutModal,
 } from "../../components";
-import { useState } from "react";
 import "./checkout.css";
 const CheckOut = () => {
   const { cart } = useCart();
@@ -66,13 +67,14 @@ const CheckOut = () => {
             <PriceSection priceTitle="tax (15%)" price={tax} />
             <PriceSection priceTitle="total" price={totalCost} />
           </div>
-          <button
+          <motion.button
+            whileHover={{ opacity: 0.9 }}
             style={{ backgroundColor: "var(--green-color)" }}
-            className="btn text-white text-capitalize w-100 mt-4"
+            className="btn text-white text-capitalize w-100 mt-4 p-2 fs-5 fw-semibold"
             onClick={() => setShowCheckout(true)}
           >
             place order
-          </button>
+          </motion.button>
         </div>
       </div>
     </section>
