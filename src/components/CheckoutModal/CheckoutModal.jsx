@@ -1,9 +1,14 @@
 import { motion, useAnimate } from "framer-motion";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { modalVariants } from "../../motion-variants/variants";
+import { useCart } from "../../hooks";
 const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
   const [scope, animate] = useAnimate();
+  const { cart } = useCart();
+
   const { subTotal, shippingFee, tax, totalCost } = details;
+  const filteredCart = cart.filter((item) => item.quantity !== 0);
+
   const hideCheckout = async () => {
     await animate(scope.current, { scale: 0 });
     setShowCheckout(false);
@@ -43,6 +48,17 @@ const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
                         tax_total: { value: tax, currency_code: "USD" },
                       },
                     },
+                    items: filteredCart.map((item) => {
+                      return {
+                        name: item.title,
+                        unit_amount: {
+                          currency_code: "USD",
+                          value: item.price,
+                        },
+                        quantity: item.quantity,
+                        category: "PHYSICAL_GOODS",
+                      };
+                    }),
                   },
                 ],
               });
@@ -54,6 +70,7 @@ const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
               console.log(order);
             }}
             onError={(err) => {
+              console.log(err);
               setPurchaseMessage("purchase not completed");
             }}
           />
