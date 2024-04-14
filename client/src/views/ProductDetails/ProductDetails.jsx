@@ -4,7 +4,7 @@ import { useCartItem } from "../../hooks";
 import { motion } from "framer-motion";
 import "./productdetails.css";
 const ProductDetails = () => {
-  const { title, price, description, images, id } = useLoaderData();
+  const { title, price, description, image, id } = useLoaderData();
   const [quantity, setQuantity] = useState(1);
   const handleCartItem = useCartItem();
 
@@ -21,11 +21,7 @@ const ProductDetails = () => {
           transition={{ duration: 1 }}
           className="product-img col-12 col-sm-6"
         >
-          <img
-            src={images[0]}
-            alt="product img"
-            className="rounded-4 img-fluid"
-          />
+          <img src={`http://localhost:5000/${image}`} alt="product img" className="rounded-4 img-fluid" />
         </motion.div>
         <motion.div
           initial={{ x: "100vw" }}
@@ -94,7 +90,7 @@ const ProductDetails = () => {
             </button>
             <motion.button
               whileHover={{ backgroundColor: "var(--green-color)" }}
-              transition={{duration: 0}}
+              transition={{ duration: 0 }}
               type="button"
               className="btn btn-outline-secondary text-capitalize w-50 rounded-5"
               onClick={(e) => {
@@ -103,7 +99,7 @@ const ProductDetails = () => {
                   id,
                   title,
                   price,
-                  images,
+                  image,
                   quantity: quantity,
                 });
               }}

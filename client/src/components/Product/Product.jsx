@@ -6,7 +6,7 @@ import {
   addToCartButton,
 } from "../../motion-variants/variants";
 const Product = ({ product }) => {
-  const { title, price, description, images, id } = product;
+  const { title, price, description, image, id } = product;
   const navigate = useNavigate();
   const handleCartItem = useCartItem();
 
@@ -29,7 +29,7 @@ const Product = ({ product }) => {
           style={{ backgroundColor: "#fff" }}
         ></i>
         <img
-          src={images[0]}
+          src={`http://localhost:5000/${image}`}
           alt="clothes"
           className="card-img-top"
           height="300"
@@ -62,7 +62,7 @@ const Product = ({ product }) => {
             className="btn btn-outline-secondary rounded-5 mt-3 text-capitalize"
             onClick={(e) => {
               e.stopPropagation();
-              handleCartItem({ id, title, price, images, quantity: 1 });
+              handleCartItem({ id, title, price, image, quantity: 1 });
             }}
           >
             add to cart

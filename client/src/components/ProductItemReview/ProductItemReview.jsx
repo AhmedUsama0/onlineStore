@@ -34,7 +34,12 @@ const ProductItemReview = ({ product }) => {
     >
       <div className="row">
         <div className="col-9 d-flex align-items-center column-gap-2">
-          <img src={image} alt="product" width="50" height="50" />
+          <img
+            src={`http://localhost:5000/${image}`}
+            alt="product"
+            width="50"
+            height="50"
+          />
           <h5 className="text-capitalize fw-bold h6">{title}</h5>
         </div>
         <div className="col d-flex flex-column align-items-end">

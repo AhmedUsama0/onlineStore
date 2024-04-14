@@ -14,7 +14,7 @@ import {
 } from "../../motion-variants/variants";
 const LandingPage = () => {
   const { page } = useParams();
-  const { products, numberOfPages } = useLoaderData();
+  const { data } = useLoaderData();
   const { searchQuery } = useSearchQuery();
   return (
     <>
@@ -36,13 +36,13 @@ const LandingPage = () => {
       <section className="products mt-5">
         <h3 className="text-capitalize fw-bold mb-4">products for you!</h3>
         <Suspense fallback={<ProductsSkeleton />}>
-          <Await resolve={products}>
-            {(resolvedProducts) => (
+          <Await resolve={data}>
+            {(resolvedData) => (
               <>
                 <div className="row row-gap-3">
-                  {resolvedProducts.length !== 0 ? (
+                  {resolvedData.length !== 0 ? (
                     <ProductsList
-                      products={resolvedProducts}
+                      products={resolvedData.products}
                       searchQuery={searchQuery}
                     />
                   ) : (
@@ -53,7 +53,7 @@ const LandingPage = () => {
                 </div>
                 <div className="mt-5 d-flex justify-content-center">
                   <PaginationButtons
-                    numberOfPages={numberOfPages}
+                    numberOfPages={resolvedData.numberOfPages}
                     currentPage={page}
                   />
                 </div>

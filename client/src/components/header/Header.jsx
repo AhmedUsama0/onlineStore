@@ -62,7 +62,7 @@ const CartItem = ({ item }) => {
     >
       <div className="d-flex align-items-center column-gap-1 col-8">
         <img
-          src={image}
+          src={`http://localhost:5000/${image}`}
           width="50"
           height="50"
           alt="product"
@@ -128,7 +128,10 @@ const Header = () => {
         <NavBar />
         <SearchBar />
         {/* start account-cart */}
-        <div className="account-cart col d-flex align-items-center justify-content-around" style={{userSelect: "none"}}>
+        <div
+          className="account-cart col d-flex align-items-center justify-content-around"
+          style={{ userSelect: "none" }}
+        >
           <div className="dropdown dropdown-center">
             <div
               className="account d-flex align-items-center gap-2"

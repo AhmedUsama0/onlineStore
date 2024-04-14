@@ -1,5 +1,5 @@
 const ProductDetailsLoader = (params) => {
-    return fetch(`https://api.escuelajs.co/api/v1/products/${params.id}`)
+    return fetch(`http://localhost:5000/product/${params.id}`)
 }
 
 export default ProductDetailsLoader;
