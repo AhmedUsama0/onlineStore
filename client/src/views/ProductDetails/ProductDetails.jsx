@@ -2,9 +2,10 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { useCartItem } from "../../hooks";
 import { motion } from "framer-motion";
+import { convertRatingToStars } from "../../utils";
 import "./productdetails.css";
 const ProductDetails = () => {
-  const { title, price, description, image, id } = useLoaderData();
+  const { title, price, description, image, rating, id } = useLoaderData();
   const [quantity, setQuantity] = useState(1);
   const handleCartItem = useCartItem();
 
@@ -21,7 +22,11 @@ const ProductDetails = () => {
           transition={{ duration: 1 }}
           className="product-img col-12 col-sm-6"
         >
-          <img src={`http://localhost:5000/${image}`} alt="product img" className="rounded-4 img-fluid" />
+          <img
+            src={`http://localhost:5000/${image}`}
+            alt="product img"
+            className="rounded-4 img-fluid"
+          />
         </motion.div>
         <motion.div
           initial={{ x: "100vw" }}
@@ -33,13 +38,7 @@ const ProductDetails = () => {
           <p className="text-capitalize text-secondary h6 fw-semibold mt-2 mb-2">
             {description}
           </p>
-          <div className="rate">
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-regular fa-star"></i>
-            <i className="fa-regular fa-star"></i>
-          </div>
+          <div className="rate">{convertRatingToStars(rating)}</div>
           <div className="price border-top border-bottom border-light-subtle mt-3 mb-3 pt-4 pb-4">
             <p className="fw-semibold h3">
               ${price.toFixed(2)}{" "}

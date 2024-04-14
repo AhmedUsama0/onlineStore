@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useCartItem } from "../../hooks";
 import { motion } from "framer-motion";
+import { convertRatingToStars } from "../../utils";
 import {
   productVariants,
   addToCartButton,
 } from "../../motion-variants/variants";
 const Product = ({ product }) => {
-  const { title, price, description, image, id } = product;
+  const { title, price, description, image, rating, id } = product;
   const navigate = useNavigate();
   const handleCartItem = useCartItem();
 
@@ -48,13 +49,7 @@ const Product = ({ product }) => {
           <p className="card-text text-capitalize h6 text-secondary fw-semibold text-truncate">
             {description}
           </p>
-          <div className="rate">
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-regular fa-star"></i>
-            <i className="fa-regular fa-star"></i>
-          </div>
+          <div className="rate">{convertRatingToStars(rating)}</div>
           <motion.button
             variants={addToCartButton}
             whileHover="inHover"
