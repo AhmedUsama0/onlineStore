@@ -1,5 +1,6 @@
 import { motion, useAnimate } from "framer-motion";
 import { modalVariants } from "../../motion-variants/variants";
+import { useCart } from "../../hooks";
 
 const PurchaseMessageSVG = ({ purchaseMessage }) => {
   if (purchaseMessage.includes("successfully")) {
@@ -37,10 +38,11 @@ const PurchaseMessageSVG = ({ purchaseMessage }) => {
 
 const PurchaseMessage = ({ setPurchaseMessage, purchaseMessage }) => {
   const [scope, animate] = useAnimate();
-
+  const { dispatch } = useCart();
   const hideMessage = async () => {
     await animate(scope.current, { scale: 0 });
     setPurchaseMessage("");
+    dispatch({ type: "EMPTY_CART" });
   };
   return (
     <div

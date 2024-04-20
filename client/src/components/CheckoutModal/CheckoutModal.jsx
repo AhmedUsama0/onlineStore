@@ -121,7 +121,6 @@ const CheckoutModal = ({ setShowCheckout, totalCost, setPurchaseMessage }) => {
             }}
             onApprove={async (data, actions) => {
               const order = await actions.order.capture();
-              console.log(order.payer);
               await sendConfirmationMail(order);
             }}
             onError={(err) => {
