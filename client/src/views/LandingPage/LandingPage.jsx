@@ -36,29 +36,13 @@ const LandingPage = () => {
       <section className="products mt-5">
         <h3 className="text-capitalize fw-bold mb-4">products for you!</h3>
         <Suspense fallback={<ProductsSkeleton />}>
-          <Await resolve={data}>
-            {(resolvedData) => (
-              <>
-                <div className="row row-gap-3">
-                  {resolvedData.length !== 0 ? (
-                    <ProductsList
-                      products={resolvedData.products}
-                      searchQuery={searchQuery}
-                    />
-                  ) : (
-                    <h2 className="alert alert-danger text-capitalize text-center">
-                      products not found
-                    </h2>
-                  )}
-                </div>
-                <div className="mt-5 d-flex justify-content-center">
-                  <PaginationButtons
-                    numberOfPages={resolvedData.numberOfPages}
-                    currentPage={page}
-                  />
-                </div>
-              </>
-            )}
+          <Await resolve={data} errorElement="cant fetch the data">
+            <div className="row row-gap-3">
+              <ProductsList searchQuery={searchQuery} />
+            </div>
+            <div className="mt-5 d-flex justify-content-center">
+              <PaginationButtons currentPage={page} />
+            </div>
           </Await>
         </Suspense>
       </section>

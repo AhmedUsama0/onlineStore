@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useAsyncValue, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import "./paginationbuttons.css";
-const PaginationButtons = ({ numberOfPages, currentPage }) => {
+const PaginationButtons = ({ currentPage }) => {
   const navigate = useNavigate();
   const scrollablePagination = useRef(null);
   const pages = useRef([]);
+  const { products, numberOfPages } = useAsyncValue();
 
   const scrollPagination = (direction) => {
     const page = pages.current[0]?.parentElement;
@@ -54,6 +55,10 @@ const PaginationButtons = ({ numberOfPages, currentPage }) => {
     const activePage = pages.current.find((page) => page.id === currentPage);
     activePage?.click();
   }, [currentPage]);
+
+  if (products.length === 0) {
+    return <></>;
+  }
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">

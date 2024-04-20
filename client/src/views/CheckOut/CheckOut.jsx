@@ -31,7 +31,7 @@ const CheckOut = () => {
     <section className="checkout">
       {showCheckout && (
         <CheckoutModal
-          details={{ subTotal, shippingFee, tax, totalCost }}
+          totalCost={totalCost}
           setPurchaseMessage={setPurchaseMessage}
           setShowCheckout={setShowCheckout}
         />

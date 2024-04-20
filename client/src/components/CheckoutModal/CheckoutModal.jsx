@@ -2,16 +2,99 @@ import { motion, useAnimate } from "framer-motion";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { modalVariants } from "../../motion-variants/variants";
 import { useCart } from "../../hooks";
-const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
+const CheckoutModal = ({ setShowCheckout, totalCost, setPurchaseMessage }) => {
   const [scope, animate] = useAnimate();
   const { cart } = useCart();
-
-  const { subTotal, shippingFee, tax, totalCost } = details;
   const filteredCart = cart.filter((item) => item.quantity !== 0);
 
   const hideCheckout = async () => {
     await animate(scope.current, { scale: 0 });
     setShowCheckout(false);
+  };
+
+  const createOrder = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/product/buy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: filteredCart.map((item) => {
+            return {
+              id: item.id,
+              quantity: item.quantity,
+            };
+          }),
+        }),
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        if (json.message) {
+          throw new Error(json.message);
+        }
+      }
+      return json.id;
+    } catch (error) {
+      let msg;
+      if (error instanceof TypeError) {
+        msg = "<p class='fs-6 mt-2'>check your network connection</p>";
+      } else if (error instanceof SyntaxError) {
+        msg =
+          "<p class='fs-6 mt-2'>unexpected error occured. please contact the support.</p>";
+      } else {
+        msg = `<p class='fs-6 mt-2'>${error.message}</p>`;
+      }
+      setPurchaseMessage(msg);
+    }
+  };
+  const sendConfirmationMail = async (order) => {
+    const purchaseMessage = "purchase completed successfully<br>";
+    const fullName =
+      order.payer.name.given_name + " " + order.payer.name.surname;
+    const payerEmail = order.payer.email_address;
+    const items = order.purchase_units[0].items;
+    try {
+      const response = await fetch(
+        "http://localhost:5000/product/confirm-payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName,
+            payerEmail,
+            items,
+          }),
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        if (json.message) {
+          throw new Error(json.message);
+        }
+      }
+      setPurchaseMessage(
+        purchaseMessage + `<p class='fs-6 mt-2'>${json.message}</p>`
+      );
+    } catch (error) {
+      let msg;
+      if (error instanceof TypeError) {
+        msg =
+          "<p class='text-danger fs-6 mt-2 text-center px-3'>check your internet connection. a confirmation email is not sent</p>";
+      } else if (error instanceof SyntaxError) {
+        msg =
+          "<p class='text-danger fs-6 mt-2 text-center px-3'>unexpected error occured please contact the support. a confirmation email is not sent</p>";
+      } else {
+        msg = `<p class='text-danger fs-6 mt-2 text-center px-3'>${error.message}</p>`;
+      }
+      setPurchaseMessage(purchaseMessage + msg);
+    }
   };
   return (
     <div
@@ -33,45 +116,16 @@ const CheckoutModal = ({ setShowCheckout, details, setPurchaseMessage }) => {
           <PayPalButtons
             key={totalCost}
             style={{ color: "blue", label: "checkout" }}
-            createOrder={(data, actions) => {
-              return actions.order.create({
-                purchase_units: [
-                  {
-                    amount: {
-                      value: totalCost,
-                      breakdown: {
-                        item_total: { value: subTotal, currency_code: "USD" },
-                        shipping: {
-                          value: shippingFee,
-                          currency_code: "USD",
-                        },
-                        tax_total: { value: tax, currency_code: "USD" },
-                      },
-                    },
-                    items: filteredCart.map((item) => {
-                      return {
-                        name: item.title,
-                        unit_amount: {
-                          currency_code: "USD",
-                          value: item.price,
-                        },
-                        quantity: item.quantity,
-                        category: "PHYSICAL_GOODS",
-                      };
-                    }),
-                  },
-                ],
-              });
+            createOrder={async () => {
+              return await createOrder();
             }}
             onApprove={async (data, actions) => {
               const order = await actions.order.capture();
-              setShowCheckout(false);
-              setPurchaseMessage("purchase completed successfully");
-              console.log(order);
+              console.log(order.payer);
+              await sendConfirmationMail(order);
             }}
             onError={(err) => {
-              console.log(err);
-              setPurchaseMessage("purchase not completed");
+              setPurchaseMessage((err) => "purchase not completed" + err);
             }}
           />
           <button

@@ -9,7 +9,6 @@ const App = () => {
       options={{
         clientId: paypalClientId,
         currency: "USD",
-        commit: "false"
       }}
     >
       <div className="container">
