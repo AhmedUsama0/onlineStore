@@ -9,8 +9,9 @@ const productsLoader = (params) => {
     const { page } = params;
     const limit = 4;
     const offset = (page - 1) * limit;
-    const data = getProductsForPage(limit, offset);
-    return defer({ data });
+    return defer({
+        data: getProductsForPage(limit, offset)
+    });
 }
 
 export default productsLoader;
