@@ -12,6 +12,7 @@ import {
   landingImageVariants,
   mainTitleVariants,
 } from "../../motion-variants/variants";
+import ProductsError from "../../router/errors/ProductsError";
 const LandingPage = () => {
   const { page } = useParams();
   const { data } = useLoaderData();
@@ -36,13 +37,21 @@ const LandingPage = () => {
       <section className="products mt-5">
         <h3 className="text-capitalize fw-bold mb-4">products for you!</h3>
         <Suspense fallback={<ProductsSkeleton />}>
-          <Await resolve={data} errorElement="cant fetch the data">
-            <div className="row row-gap-3">
-              <ProductsList searchQuery={searchQuery} />
-            </div>
-            <div className="mt-5 d-flex justify-content-center">
-              <PaginationButtons currentPage={page} />
-            </div>
+          <Await resolve={data} errorElement={<ProductsError />}>
+            {(resolvedData) =>
+              !resolvedData.products || !resolvedData.numberOfPages ? (
+                <ProductsError />
+              ) : (
+                <>
+                  <div className="row row-gap-3">
+                    <ProductsList searchQuery={searchQuery} />
+                  </div>
+                  <div className="mt-5 d-flex justify-content-center">
+                    <PaginationButtons currentPage={page} />
+                  </div>
+                </>
+              )
+            }
           </Await>
         </Suspense>
       </section>

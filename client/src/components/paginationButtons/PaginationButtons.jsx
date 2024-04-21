@@ -5,7 +5,7 @@ const PaginationButtons = ({ currentPage }) => {
   const navigate = useNavigate();
   const scrollablePagination = useRef(null);
   const pages = useRef([]);
-  const { products, numberOfPages } = useAsyncValue();
+  const { numberOfPages } = useAsyncValue();
 
   const scrollPagination = (direction) => {
     const page = pages.current[0]?.parentElement;
@@ -56,9 +56,6 @@ const PaginationButtons = ({ currentPage }) => {
     activePage?.click();
   }, [currentPage]);
 
-  if (products.length === 0) {
-    return <></>;
-  }
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">

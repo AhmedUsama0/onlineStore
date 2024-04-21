@@ -8,16 +8,19 @@ class ProductController {
         const offset = parseInt(req.query.offset);
 
         Product.getNumberOfProducts((err, data) => {
-            const productsNumber = data[0].productsNumber;
-            const numberOfPages = Math.ceil(productsNumber / limit);
-
             if (err) {
                 return res.status(500).json({ message: "products error occured" });
             }
+            const productsNumber = data[0].productsNumber;
+            const numberOfPages = Math.ceil(productsNumber / limit);
+
 
             Product.getLimitedNumberOfProducts(limit, offset, (err, data) => {
                 if (err) {
                     return res.status(500).json({ message: "cannot fetch the products" });
+                }
+                if (data.length === 0) {
+                    return res.status(404).json({ message: "no products found" });
                 }
                 res.json({
                     products: data,
