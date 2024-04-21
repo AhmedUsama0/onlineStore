@@ -42,7 +42,9 @@ const PurchaseMessage = ({ setPurchaseMessage, purchaseMessage }) => {
   const hideMessage = async () => {
     await animate(scope.current, { scale: 0 });
     setPurchaseMessage("");
-    dispatch({ type: "EMPTY_CART" });
+    if (purchaseMessage.includes("successfully")) {
+      dispatch({ type: "EMPTY_CART" });
+    }
   };
   return (
     <div
